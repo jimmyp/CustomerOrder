@@ -4,8 +4,10 @@ namespace CSharp.CustomerOrder
 {
     public class Customer
     {
-        private Customer (string firstName)
+        // :( this is a compromise we have to make for ORMs we shouldn't have to do this... and we should never use it
+        public Customer (Guid id, string firstName)
         {
+            _id = id;
             _firstName = firstName;
         }
             
@@ -18,9 +20,11 @@ namespace CSharp.CustomerOrder
             if (!CanCreateNewCustomer (firstName:firstName))
                 throw new DomainValidationException ("New customer must have first name");
 
-            return new Customer(firstName:firstName);
+            return new Customer(id: Guid.NewGuid(), firstName:firstName);
         }
 
+
+        Guid _id;
         string _firstName;
 
         public override bool Equals (object obj)
@@ -32,7 +36,7 @@ namespace CSharp.CustomerOrder
 
         public override int GetHashCode ()
         {
-            return _firstName.GetHashCode ();
+            return Tuple.Create (_id, _firstName).GetHashCode ();
         }
     }
 }
