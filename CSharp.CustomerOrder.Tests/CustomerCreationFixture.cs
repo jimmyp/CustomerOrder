@@ -28,18 +28,18 @@ namespace CSharp.CustomerOrder.Tests
             Assert.IsNotNull (c);
         }
 
-        private void TestFailingWith(string firstName){
+        private void TestFailingValidationWith(string firstName){
             Assert.IsFalse(Customer.CanCreateNewCustomer(firstName));
         }
 
         [Test()]
         public void EmptyCustomerNameFailsValidation(){
-            TestFailingWith (String.Empty);
+            TestFailingValidationWith (String.Empty);
         }
 
         [Test()]
         public void NullCustomerNameFailsValidation(){
-            TestFailingWith (null);
+            TestFailingValidationWith (null);
         }
 
         [Test()]

@@ -4,8 +4,7 @@ namespace CSharp.CustomerOrder
 {
     public class Customer
     {
-        // :( this is a compromise we have to make for ORMs we shouldn't have to do this... and we should never use it
-        public Customer (Guid id, string firstName)
+        protected Customer (Guid id, string firstName, decimal outStandingBalance)
         {
             _id = id;
             _firstName = firstName;
@@ -20,9 +19,13 @@ namespace CSharp.CustomerOrder
             if (!CanCreateNewCustomer (firstName:firstName))
                 throw new DomainValidationException ("New customer must have first name");
 
-            return new Customer(id: Guid.NewGuid(), firstName:firstName);
+            return new Customer(id: Guid.NewGuid(), firstName:firstName, outStandingBalance: 0.0m);
         }
 
+        public void CanAddOrder (object par)
+        {
+            throw new NotImplementedException ();
+        }
 
         Guid _id;
         string _firstName;
